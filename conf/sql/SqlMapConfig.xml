@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="defaultStatementTimeout" value="25000" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias alias="string" type="java.lang.String" />
+		<typeAlias alias="integer" type="java.lang.Integer" />
+		<typeAlias alias="hashMap" type="java.util.HashMap" />
+		<typeAlias alias="arrayList" type="java.util.ArrayList" />
+		<typeAlias alias="linkedHashMap" type="java.util.LinkedHashMap" />
+
+		<typeAlias alias="MemberVO"
+			type="com.bluemorning.springmvcex2.service.vo.MemberVO" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="sql/memberSQL.xml" />
+	</mappers>
+</configuration>

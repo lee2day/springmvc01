@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<resultMap type="MemberVO" id="member-info">
+		<id property="memId" column="mem_id" />
+		<result property="memPwd" column="mem_pwd" />
+		<result property="memName" column="mem_name" />
+	</resultMap>
+
+	<!-- 사용자 상세정보 -->
+	<select id="selectMemberInfo" parameterType="MemberVO"
+		resultMap="member-info">
+		SELECT mem_id, mem_pwd, mem_name FROM member WHERE
+		mem_id=#{memId} AND mem_pwd=#{memPwd}
+	</select>
+	
+	<!-- 가입 -->
+	<insert id="insertMember" parameterType="MemberVO">
+		INSERT INTO member (mem_id, mem_pwd, mem_name)
+		VALUES (#{memId}, #{memPwd}, #{memName})
+	</insert>
+
+	<update id="updateMember" parameterType="MemberVO">
+		UPDATE member
+		SET
+			mem_name = #{memName}
+			<if test="memNewPwd != null and memNewPwd !=  ''">
+			, mem_pwd = #{memNewPwd}
+			</if>
+		WHERE
+		mem_id=#{memId} AND mem_pwd = #{memPwd}
+	</update>
+
+	<delete id="deleteMember" parameterType="MemberVO">
+		DELETE FROM member WHERE mem_id=#{memId}
+	</delete>
+
+</mapper>

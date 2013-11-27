@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!-- 어노테이션이 적용된 class( @Controller, @Service, @Repository 를 포함한 class )를 
+		로딩 base-package로 부터 스캔을 할 때 Controller 타입은 제외 시킨다. 제외 시키는 이유는 spring mvc에 
+		관련된 설정 파일은 dispatcher-servlet.xml 에서 스캔 하기 때문이다. scoped-proxy 는 아래의 3가지를 
+		지정할 수 있다. - no : default, proxy를 생성하지 않는다. - interface : JDK Dynamic Proxy를 
+		이용한 Proxy 생성 - targetClass : CGLIB(code generator library)를 이용한 Proxy 생성 -->
+	<context:component-scan base-package="com.bluemorning.springmvcex2"
+		scoped-proxy="targetClass">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- config properties setting -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/conf.properties</value>
+			</list>
+		</property>
+		<property name="fileEncoding">
+			<value>UTF-8</value>
+		</property>
+	</bean>
+
+	<!-- Event Send Thread -->
+	<bean id="threadPoolTaskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"
+		p:corePoolSize="5" p:maxPoolSize="10" p:queueCapacity="25"
+		p:keepAliveSeconds="60" p:threadNamePrefix="EventSend_Thread" />
+
+</beans>

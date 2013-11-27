@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %p - %C{1}.%M(%L) | %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="SpringMvcEx2" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="/log/SpringMvcEx2/web.log" />
+		<param name="Append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%5p [%d{HH:mm:ss}] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="SQL" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="/log/SpringMvcEx2/sql/sql.log" />
+		<param name="Append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%5p [%d{HH:mm:ss}] %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="com.bluemorning.springmvcex2" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="SpringMvcEx2" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<logger name="org.apache" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="SpringMvcEx2" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<logger name="org.springframework" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="SpringMvcEx2" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<logger name="org.mybatis" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="SQL" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<logger name="java.sql" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="SQL" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+</log4j:configuration>
